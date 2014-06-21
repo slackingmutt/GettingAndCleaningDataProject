@@ -29,7 +29,7 @@ names(project.data) <- features[,2]
 # Get the activities into the data
 # First convert the coded numbers into descriptive text
 names(project.activity) <- "Activity"
-# note that the result of this operation is a vector 
+# note that the result of this operation is a vector
 convert.code.to.names <- c('1' = 'Walking','2' = 'Walking_upstairs','3' = 'Walking_downstairs',
                            '4' = 'Sitting','5' = 'Standing','6' = 'Laying')
 Activity <- convert.code.to.names[project.activity$Activity]
