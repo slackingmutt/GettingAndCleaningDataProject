@@ -22,14 +22,18 @@ test.subjects <- data.frame(read.table("./test/subject_test.txt"))
 project.data <- rbind(train.data,test.data)
 project.activity <- rbind(train.activity,test.activity)
 project.subjects <- rbind(train.subjects,test.subjects)
-# read the observed variables as features
-features <- data.frame(read.table("./features.txt"))
+# read the observed variables as features; no factors please
+features <- data.frame(read.table("./features.txt",stringsAsFactors=FALSE))
 # label the data columns with the features
 names(project.data) <- features[,2]
+# find the variables that correspond to mean and standard deviation
+ms.feat <- grep("mean|std",features[,2])
+# subset the data with these features
+project.data <- project.data[,ms.feat]
 # Get the activities into the data
 # First convert the coded numbers into descriptive text
 names(project.activity) <- "Activity"
-# note that the result of this operation is a vector
+# note that the result of this operation is a vector 
 convert.code.to.names <- c('1' = 'Walking','2' = 'Walking_upstairs','3' = 'Walking_downstairs',
                            '4' = 'Sitting','5' = 'Standing','6' = 'Laying')
 Activity <- convert.code.to.names[project.activity$Activity]
@@ -38,10 +42,6 @@ project.data <- cbind(Activity,project.data)
 # add the subjects to the project,data
 names(project.subjects) <- "Subjects"
 project.data <-cbind(project.subjects,project.data)
-# locate the features that denote means or stds
-ms.feat <- grep("mean|std",as.character(features[,2]))
-# subset those columns from the entire data set
-project.data <- project.data[,ms.feat]
 # Consolidating the rows by means is easier with a data.table
 project.data <- data.table(project.data)
 # specify the columns to be used to compute the mean

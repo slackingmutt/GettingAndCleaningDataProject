@@ -20,6 +20,9 @@ The training, activity, and subject  data were read into the data frames train.d
 and train.submects. Likewise, the corresponding test data were read into the data frames
 test.data, test.activity, and test.subjects.
 
+The features were read into a data frame using the 'stringsAsFactors=FALSE' parameter in order
+to avoid factors.
+
 The following tests indicated the absence of NAs.
 > sum(is.na(train.data))
 [1] 0
